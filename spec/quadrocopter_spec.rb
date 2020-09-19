@@ -16,6 +16,16 @@ RSpec.describe QueadrocopterPath do
         ]
       }
       it { is_expected.to eq(true) }
+      context "with single transmitter" do
+        let(:start)       { {x: 10, y: 10} }
+        let(:destination) { {x: 12, y: 12} }
+        let(:transmitters) {
+          [
+            { x: 10, y: 10, power: 4 },
+          ]
+        }
+        it { is_expected.to eq(true) }
+      end
     end
   end
 end

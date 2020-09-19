@@ -57,6 +57,8 @@ class QueadrocopterPath
   def safe?
     start_transmitter = transmitter_for_point(**start_point)
     end_transmitter = transmitter_for_point(**end_point)
+
+    return true if start_transmitter.index == end_transmitter.index
     path.path?(start_transmitter.index, end_transmitter.index)
   end
 
