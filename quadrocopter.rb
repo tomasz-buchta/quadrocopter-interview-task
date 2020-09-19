@@ -2,7 +2,7 @@ require "rgl/adjacency"
 require "rgl/path"
 require "pry"
 
-class PathBuilder
+class TransmitterNetworkBuilder
   attr_reader :transmitters
 
   def initialize(transmitters)
@@ -45,13 +45,14 @@ class Transmitter < Struct.new(:index, :x, :y, :power)
 end
 
 class QueadrocopterPath
-  attr_reader :start_point, :end_point, :transmitters, :path
+  attr_reader :start_point, :end_point, :transmitters, :network
+
   def initialize(transmitters:, start_point:, end_point:)
     @start_point  = start_point
     @end_point    = end_point
     # Build transmitters objects out of input data
     @transmitters = transmitters.each_with_index.map{|t, index| Transmitter.new(t.merge(index: index + 1))}
-    @path         = PathBuilder.new(@transmitters).build
+    @network      = TransmitterNetworkBuilder.new(@transmitters).build
   end
 
   def safe?
@@ -61,7 +62,7 @@ class QueadrocopterPath
     return false if start_transmitter.nil? || end_transmitter.nil?
     return false if transmitters.empty?
     return true if start_transmitter.index == end_transmitter.index
-    path.path?(start_transmitter.index, end_transmitter.index)
+    network.path?(start_transmitter.index, end_transmitter.index)
   end
 
   private

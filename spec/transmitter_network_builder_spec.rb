@@ -1,6 +1,6 @@
 require_relative "../quadrocopter.rb"
 
-RSpec.describe PathBuilder do
+RSpec.describe TransmitterNetworkBuilder do
   let(:transmitters) {
     [
       Transmitter.new(index: 1, x: 0, y: 0, power: 1 ),
