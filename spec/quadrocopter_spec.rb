@@ -40,5 +40,15 @@ RSpec.describe QueadrocopterPath do
       let(:transmitters) { [] }
       it { is_expected.to eq(false) }
     end
+
+    context "when start point is out of transmitter range" do
+      let(:start)       { {x: 100, y: 100} }
+      it { is_expected.to eq(false) }
+    end
+
+    context "when destination point is out of transmitter range" do
+      let(:destination)       { {x: 100, y: 100} }
+      it { is_expected.to eq(false) }
+    end
   end
 end

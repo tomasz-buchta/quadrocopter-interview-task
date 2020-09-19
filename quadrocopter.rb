@@ -58,6 +58,7 @@ class QueadrocopterPath
     start_transmitter = transmitter_for_point(**start_point)
     end_transmitter = transmitter_for_point(**end_point)
 
+    return false if start_transmitter.nil? || end_transmitter.nil?
     return false if transmitters.empty?
     return true if start_transmitter.index == end_transmitter.index
     path.path?(start_transmitter.index, end_transmitter.index)
