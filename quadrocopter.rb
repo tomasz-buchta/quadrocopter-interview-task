@@ -51,7 +51,9 @@ class QueadrocopterPath
     @start_point  = start_point
     @end_point    = end_point
     # Build transmitters objects out of input data
-    @transmitters = transmitters.each_with_index.map{|t, index| Transmitter.new(t.merge(index: index + 1))}
+    @transmitters = transmitters
+      .each_with_index.map{|transmitter, index| transmitter.merge(index: index + 1)}
+      .map { |t| Transmitter.new(**t) }
     @network      = TransmitterNetworkBuilder.new(@transmitters).build
   end
 
