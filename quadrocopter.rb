@@ -25,8 +25,8 @@ end
 class Transmitter < Struct.new(:index, :x, :y, :power)
   def initialize(index:, x:, y:, power:)
     self.index = index
-    self.x = x
-    self.y = y
+    self.x = x.to_f
+    self.y = y.to_f
     # Comparing int with float results in ignoring the fractional part
     self.power = power.to_f
   end
