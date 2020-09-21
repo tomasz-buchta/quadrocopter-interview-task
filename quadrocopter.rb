@@ -43,14 +43,14 @@ end
 class QueadrocopterPath
   attr_reader :start_point, :end_point, :transmitters, :network
 
-  def initialize(transmitters:, start_point:, end_point:)
+  def initialize(transmitters:, start_point:, end_point:, network_builder: TransmitterNetworkBuilder.new)
     @start_point  = start_point
     @end_point    = end_point
     # Build transmitters objects out of input data
     @transmitters = transmitters
       .each_with_index.map{|transmitter, index| transmitter.merge(index: index + 1)}
       .map { |t| Transmitter.new(**t) }
-    @network = TransmitterNetworkBuilder.new.build @transmitters
+    @network = network_builder.build @transmitters
   end
 
   def safe?
