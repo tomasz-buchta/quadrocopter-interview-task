@@ -12,11 +12,8 @@ class TransmitterNetworkBuilder
   # Builds graph representation of transmitters
   def build
     graph = RGL::AdjacencyGraph.new
-    transmitters.each do |current_transmitter|
-      other_transmitters = transmitters.reject { |t| t.index == current_transmitter.index }
-      other_transmitters.each do |other_transmitter|
-        graph.add_edge(current_transmitter.index, other_transmitter.index) if current_transmitter.adjacent?(other_transmitter)
-      end
+    transmitters.combination(2) do |transmitter_a, transmitter_b|
+      graph.add_edge(transmitter_a.index, transmitter_b.index) if transmitter_a.adjacent?(transmitter_b)
     end
     graph
   end
