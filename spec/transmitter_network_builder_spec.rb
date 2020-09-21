@@ -8,7 +8,7 @@ RSpec.describe TransmitterNetworkBuilder do
       Transmitter.new(index: 3, x: 3, y: 3, power: 2)
     ]
   }
-  subject { described_class.new(transmitters).build }
+  subject { described_class.new.build(transmitters) }
 
   it { is_expected.to be_a(RGL::AdjacencyGraph) }
   it { expect(subject.vertices).to eq([1,2,3]) }

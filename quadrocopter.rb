@@ -3,15 +3,14 @@ require "rgl/path"
 require "pry"
 
 class TransmitterNetworkBuilder
-  attr_reader :transmitters
+  attr_reader :graph
 
-  def initialize(transmitters)
-    @transmitters = transmitters
+  def initialize(graph = RGL::AdjacencyGraph.new)
+    @graph = graph
   end
 
   # Builds graph representation of transmitters
-  def build
-    graph = RGL::AdjacencyGraph.new
+  def build(transmitters)
     transmitters.combination(2) do |transmitter_a, transmitter_b|
       graph.add_edge(transmitter_a.index, transmitter_b.index) if transmitter_a.adjacent?(transmitter_b)
     end
@@ -51,7 +50,7 @@ class QueadrocopterPath
     @transmitters = transmitters
       .each_with_index.map{|transmitter, index| transmitter.merge(index: index + 1)}
       .map { |t| Transmitter.new(**t) }
-    @network      = TransmitterNetworkBuilder.new(@transmitters).build
+    @network = TransmitterNetworkBuilder.new.build @transmitters
   end
 
   def safe?
